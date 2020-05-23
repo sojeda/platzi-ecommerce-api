@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -25,14 +26,14 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return $product;
+        return new ProductResource($product);
     }
 
     public function update(Request $request, Product $product)
     {
         $product->update($request->all());
 
-        return $product;
+        return new ProductResource($product);
     }
 
     public function destroy(Product $product)
