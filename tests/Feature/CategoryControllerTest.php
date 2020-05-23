@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Category;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CategoryControllerTest extends TestCase
@@ -24,6 +25,11 @@ class CategoryControllerTest extends TestCase
 
     public function test_create_new_category()
     {
+        Sanctum::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
+
         $data = [
             'name' => 'Hola',
         ];
@@ -36,6 +42,11 @@ class CategoryControllerTest extends TestCase
 
     public function test_update_category()
     {
+        Sanctum::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
+
         /** @var Category $category */
         $category = factory(Category::class)->create();
 
@@ -62,6 +73,11 @@ class CategoryControllerTest extends TestCase
 
     public function test_delete_category()
     {
+        Sanctum::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
+
         /** @var Category $category */
         $category = factory(Category::class)->create();
 
