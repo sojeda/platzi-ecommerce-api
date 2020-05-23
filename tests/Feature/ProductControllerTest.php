@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,7 +23,7 @@ class ProductControllerTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
-        $response->assertJsonCount(5, 'data');
+        $response->assertJsonCount(5);
     }
 
     public function test_create_new_product()
@@ -49,7 +50,6 @@ class ProductControllerTest extends TestCase
         ];
 
         $response = $this->patchJson("/api/products/{$product->getKey()}", $data);
-
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
     }
@@ -63,7 +63,6 @@ class ProductControllerTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertHeader('content-type', 'application/json');
-        $response->assertJsonCount(1);
     }
 
     public function test_delete_product()
