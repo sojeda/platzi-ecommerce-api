@@ -45,4 +45,33 @@ class User extends Authenticatable
             ->as('rating')
             ->withTimestamps();
     }
+
+    public function rate(Product $product, float $rate): bool
+    {
+        if ($this->hasRated($product)) {
+            return false;
+        }
+
+        $this->ratings()->attach($product->id, [
+            'score' => $rate
+        ]);
+
+        return true;
+    }
+
+    public function unrate(Product $product): bool
+    {
+        if (! $this->hasRated($product)) {
+            return false;
+        }
+
+        $this->ratings()->detach($product->id);
+
+        return true;
+    }
+
+    public function hasRated(Product $model): bool
+    {
+        return $this->ratings()->wherePivot('product_id', $model->getKey())->exists();
+    }
 }
