@@ -34,9 +34,11 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
         $schedule->command(SendNewsletterCommand::class)
+            ->onOneServer()
             ->mondays();
 
         $schedule->command(SendEmailVerificationReminderCommand::class)
+            ->onOneServer()
             ->daily();
     }
 
