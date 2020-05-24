@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Events\ModelRated;
+use App\Events\ModelUnrated;
 use App\Product;
 use App\Rating;
 use App\User;
@@ -78,5 +79,41 @@ class RatingTest extends TestCase
         $this->assertEquals($user2->id, $rating2->rateable->id);
 
         Event::assertDispatchedTimes(ModelRated::class, 2);
+    }
+
+    public function test_unrate_product()
+    {
+        Event::fake();
+
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        /** @var Product $product */
+        $product = factory(Product::class)->create();
+
+        $user->rate($product, 5);
+        $result = $user->unrate($product);
+
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+
+        Event::assertDispatchedTimes(ModelUnrated::class);
+    }
+
+    public function test_unrate_product_has_not_rate()
+    {
+        Event::fake();
+
+        /** @var User $user */
+        $user = factory(User::class)->create();
+        /** @var Product $product */
+        $product = factory(Product::class)->create();
+
+        $result = $user->unrate($product);
+
+        $this->assertIsBool($result);
+        $this->assertFalse($result);
+        $this->assertEquals(0, $product->qualifications()->count());
+
+        Event::assertNotDispatched(ModelUnrated::class);
     }
 }
