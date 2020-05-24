@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Notifications\NewsletterNotification;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -13,6 +14,9 @@ class SendNewsletterCommand extends Command
 
     public function handle()
     {
-        User::query();
+        User::query()->whereNotNull('email_verified_at')
+            ->each(function (User $user) {
+                $user->notify(new NewsletterNotification());
+            });
     }
 }
