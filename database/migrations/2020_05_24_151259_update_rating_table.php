@@ -17,8 +17,9 @@ class UpdateRatingTable extends Migration
             $table->integer('qualifier_id');
             $table->string('qualifier_type');
              */
-            $table->morphs('rateable');
-            $table->morphs('qualifier');
+            // Sql Lite Testing
+            $table->nullableMorphs('rateable');
+            $table->nullableMorphs('qualifier');
         });
 
         \App\Rating::all()->each(function (\App\Rating $rating) {
@@ -30,8 +31,11 @@ class UpdateRatingTable extends Migration
         });
 
         Schema::table('ratings', function (Blueprint $table) {
-            $table->dropForeign('ratings_product_id_foreign');
-            $table->dropForeign('ratings_user_id_foreign');
+            if (env('DB_CONNECTION') !== 'sqlite') {
+                // Not working on SQL Lite
+                $table->dropForeign('ratings_product_id_foreign');
+                $table->dropForeign('ratings_user_id_foreign');
+            }
             $table->dropColumn(['user_id', 'product_id']);
         });
     }

@@ -18,16 +18,18 @@ class Product extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function ratings()
+    public function qualifiers(string $model = null)
     {
-        return $this->belongsToMany(User::class, 'ratings')
-            ->using(Rating::class)
-            ->as('users')
-            ->withTimestamps();
+        $modelClass = $model ? (new $model)->getMorphClass() : $this->getMorphClass();
+
+        return $this->morphToMany($modelClass, 'rateable', 'ratings', 'rateable_id', 'qualifier_id')
+            ->withPivot('qualifier_type', 'score')
+            ->wherePivot('qualifier_type', $modelClass)
+            ->wherePivot('rateable_type', $this->getMorphClass());
     }
 
-    public function averageRating(): float
+    public function averageUserRating(): float
     {
-        return $this->ratings()->avg('score') ?: 0.0;
+        return $this->qualifiers(User::class)->avg('score') ?: 0.0;
     }
 }

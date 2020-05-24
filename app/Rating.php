@@ -11,13 +11,13 @@ class Rating extends Pivot
 
     protected $table = 'ratings';
 
-    public function user()
+    public function rateable()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 
-    public function product()
+    public function qualifier()
     {
-        return $this->belongsTo(Product::class);
+        return $this->morphTo();
     }
 }
