@@ -17,6 +17,7 @@ class RatingTest extends TestCase
 
     public function test_a_product_belongs_to_many_users()
     {
+        Event::fake();
         /** @var User $user */
         $user = factory(User::class)->create();
         /** @var Product $product */

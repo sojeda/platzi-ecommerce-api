@@ -15,6 +15,11 @@ class ProductControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Sanctum::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
     }
 
     public function test_index()
@@ -30,11 +35,6 @@ class ProductControllerTest extends TestCase
 
     public function test_create_new_product()
     {
-        Sanctum::actingAs(
-            factory(User::class)->create(),
-            ['*']
-        );
-
         $data = [
             'name' => 'Hola',
             'price' => 1000,
@@ -64,11 +64,6 @@ class ProductControllerTest extends TestCase
 
     public function test_update_product()
     {
-        Sanctum::actingAs(
-            factory(User::class)->create(),
-            ['*']
-        );
-
         /** @var Product $product */
         $product = factory(Product::class)->create();
 
@@ -95,11 +90,6 @@ class ProductControllerTest extends TestCase
 
     public function test_delete_product()
     {
-        Sanctum::actingAs(
-            factory(User::class)->create(),
-            ['*']
-        );
-
         /** @var Product $product */
         $product = factory(Product::class)->create();
 
