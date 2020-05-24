@@ -27,16 +27,18 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')->hourly();
+        $schedule->command('inspire')
+            ->sendOutputTo(storage_path('inspire.log'))
+            ->hourly();
 
         $schedule->call(function () {
             echo 'Test';
         })->everyMinute()->evenInMaintenanceMode();
 
-        $schedule->command(SendNewsletterCommand::class)
+        $schedule->command('send:newsletter --schedule')
             ->onOneServer()
             ->withoutOverlapping()
-            ->mondays();
+            ->everyMinute();
 
         $schedule->command(SendEmailVerificationReminderCommand::class)
             ->onOneServer()
