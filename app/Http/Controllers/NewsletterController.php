@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Artisan;
 
 class NewsletterController extends Controller
 {
-    public function send(): void
+    public function send()
     {
         Artisan::call(SendEmailVerificationReminderCommand::class);
+
+        return response()->json();
     }
 }
