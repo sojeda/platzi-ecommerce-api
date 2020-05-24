@@ -16,7 +16,9 @@ class Product extends Model
 
     protected static function booted()
     {
-
+        static::deleting(function (Product $product) {
+            $product->qualifications()->delete();
+        });
     }
 
     protected $guarded = [];
