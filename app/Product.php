@@ -12,4 +12,12 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function ratings()
+    {
+        return $this->belongsToMany(User::class, 'ratings')
+            ->using(Rating::class)
+            ->as('users')
+            ->withTimestamps();
+    }
 }
