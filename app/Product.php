@@ -20,4 +20,9 @@ class Product extends Model
             ->as('users')
             ->withTimestamps();
     }
+
+    public function averageRating(): float
+    {
+        return $this->ratings()->avg('score') ?: 0.0;
+    }
 }
