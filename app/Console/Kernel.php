@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendEmailVerificationReminderCommand;
+use App\Console\Commands\SendNewsletterCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SendNewsletterCommand::class,
+        SendEmailVerificationReminderCommand::class,
     ];
 
     /**
@@ -29,6 +32,12 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             echo 'Test';
         })->everyMinute();
+
+        $schedule->command(SendNewsletterCommand::class)
+            ->mondays();
+
+        $schedule->command(SendEmailVerificationReminderCommand::class)
+            ->daily();
     }
 
     /**
