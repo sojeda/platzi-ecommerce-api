@@ -30,6 +30,8 @@ class UpdateRatingTable extends Migration
         });
 
         Schema::table('ratings', function (Blueprint $table) {
+            $table->dropForeign('ratings_product_id_foreign');
+            $table->dropForeign('ratings_user_id_foreign');
             $table->dropColumn(['user_id', 'product_id']);
         });
     }
@@ -37,8 +39,9 @@ class UpdateRatingTable extends Migration
     public function down()
     {
         Schema::table('ratings', function (Blueprint $table) {
-            $table->dropColumn(['rater_type', 'rater_id', 'rateable_type', 'rateable_id']);
+            $table->dropColumn(['qualifier_type', 'qualifier_id', 'rateable_type', 'rateable_id']);
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('user_id')->references('id')->on('users');
