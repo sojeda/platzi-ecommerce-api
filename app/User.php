@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -38,40 +39,55 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function ratings()
+    public function ratings($model = null)
     {
-        return $this->belongsToMany(Product::class, 'ratings')
-            ->using(Rating::class)
+        $modelClass = $model ? (new $model)->getMorphClass() : $this->getMorphClass();
+
+        $morphToMany = $this->morphToMany(
+            $modelClass,
+            'qualifier',
+            'ratings',
+            'qualifier_id',
+            'rateable_id'
+        );
+
+        $morphToMany
             ->as('rating')
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withPivot('rateable_type', 'score')
+            ->wherePivot('rateable_type', $modelClass)
+            ->wherePivot('qualifier_type', $this->getMorphClass());
+
+        return $morphToMany;
     }
 
-    public function rate(Product $product, float $rate): bool
+    public function rate(Model $model, float $score): bool
     {
-        if ($this->hasRated($product)) {
+        if ($this->hasRated($model)) {
             return false;
         }
 
-        $this->ratings()->attach($product->id, [
-            'score' => $rate
+        $this->ratings($model)->attach($model->getKey(), [
+            'score' => $score,
+            'rateable_type' => get_class($model)
         ]);
 
         return true;
     }
 
-    public function unrate(Product $product): bool
+    public function unrate(Model $model): bool
     {
-        if (! $this->hasRated($product)) {
+        if (! $this->hasRated($model)) {
             return false;
         }
 
-        $this->ratings()->detach($product->id);
+        $this->ratings($model->getMorphClass())->detach($model->getKey());
 
         return true;
     }
 
-    public function hasRated(Product $model): bool
+    public function hasRated(Model $model): bool
     {
-        return $this->ratings()->wherePivot('product_id', $model->getKey())->exists();
+        return ! is_null($this->ratings($model->getMorphClass())->find($model->getKey()));
     }
 }
