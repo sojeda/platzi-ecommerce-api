@@ -35,10 +35,12 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(SendNewsletterCommand::class)
             ->onOneServer()
+            ->withoutOverlapping()
             ->mondays();
 
         $schedule->command(SendEmailVerificationReminderCommand::class)
             ->onOneServer()
+            ->withoutOverlapping()
             ->daily();
     }
 
