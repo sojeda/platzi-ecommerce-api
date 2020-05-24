@@ -49,7 +49,9 @@ class ProductTest extends TestCase
 
         Sanctum::actingAs($user);
 
-        $product = factory(Product::class)->create();
+        $product = factory(Product::class)->create([
+            'created_by' => $user->id,
+        ]);
 
         $this->assertInstanceOf(User::class, $product->createdBy);
         $this->assertEquals($user->id, $product->createdBy->id);
