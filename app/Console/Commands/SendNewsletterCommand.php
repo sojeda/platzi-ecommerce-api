@@ -32,6 +32,7 @@ class SendNewsletterCommand extends Command
                     $user->notify(new NewsletterNotification());
                 });
 
+                $this->info('Correos enviados');
                 return;
             }
         }
