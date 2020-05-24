@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Product;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -21,6 +22,7 @@ class ProductRatingControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Event::fake();
         $this->normalUser = factory(User::class)->create();
         $this->adminUser = factory(User::class)->create();
         $this->product = factory(Product::class)->create();

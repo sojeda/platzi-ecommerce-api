@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Category;
 use App\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
@@ -13,6 +14,7 @@ class CategoryTest extends TestCase
 
     public function test_a_category_has_many_products()
     {
+        Event::fake();
         $category = factory(Category::class)->create();
         $product1 = factory(Product::class)->create(['category_id' => $category->id]);
         $product2 = factory(Product::class)->create(['category_id' => $category->id]);
