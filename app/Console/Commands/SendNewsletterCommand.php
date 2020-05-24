@@ -8,13 +8,16 @@ use Illuminate\Console\Command;
 
 class SendNewsletterCommand extends Command
 {
-    protected $signature = 'send:newsletter {emails?*}';
+    protected $signature = 'send:newsletter
+                            {emails?*} : Correos Electronicos a los cuales enviar directamente
+                            {--s|schedule : Si debe ser ejecutado directamente o no}';
 
     protected $description = 'Envia un correo electronico a todos los usuarios que hayan verificado su cuenta';
 
     public function handle()
     {
         $userEmails = $this->argument('emails');
+        $schedule = $this->option('schedule');
 
         $builder = User::query();
 
@@ -28,7 +31,7 @@ class SendNewsletterCommand extends Command
         if ($count) {
             $this->info("Se enviaran {$count} correos");
 
-            if ($this->confirm('¿Estas de acuerdo?')) {
+            if ($this->confirm('¿Estas de acuerdo?') || $schedule) {
                 $this->output->progressStart($count);
                 $builder->each(function (User $user) {
                     $user->notify(new NewsletterNotification());
