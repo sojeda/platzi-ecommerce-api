@@ -23,8 +23,8 @@ class UpdateRatingTable extends Migration
         });
 
         \App\Rating::all()->each(function (\App\Rating $rating) {
-            $rating->rater_type = \App\User::class;
-            $rating->rater_id = $rating->user_id;
+            $rating->qualifier_type = \App\User::class;
+            $rating->qualifier_id = $rating->user_id;
             $rating->rateable_type = $rating->product_id;
             $rating->rateable_id = \App\Product::class;
             $rating->save();
