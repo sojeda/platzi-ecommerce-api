@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:newsletter --schedule')
             ->onOneServer()
             ->withoutOverlapping()
-            ->everyMinute();
+            ->mondays();
 
         $schedule->command(SendEmailVerificationReminderCommand::class)
             ->onOneServer()
