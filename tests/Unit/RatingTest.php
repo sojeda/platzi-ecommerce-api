@@ -2,10 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\Events\ModelRated;
 use App\Product;
 use App\Rating;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class RatingTest extends TestCase
@@ -30,6 +32,8 @@ class RatingTest extends TestCase
 
     public function test_averageRating()
     {
+        Event::fake();
+
         /** @var User $user */
         $user = factory(User::class)->create();
         /** @var User $user2 */
@@ -47,6 +51,8 @@ class RatingTest extends TestCase
 
     public function test_rating_model()
     {
+        Event::fake();
+
         /** @var User $user */
         $user = factory(User::class)->create();
         /** @var User $user2 */
@@ -70,5 +76,7 @@ class RatingTest extends TestCase
         $this->assertInstanceOf(User::class, $rating2->qualifier);
         $this->assertEquals($user->id, $rating2->qualifier->id);
         $this->assertEquals($user2->id, $rating2->rateable->id);
+
+        Event::assertDispatchedTimes(ModelRated::class, 2);
     }
 }
