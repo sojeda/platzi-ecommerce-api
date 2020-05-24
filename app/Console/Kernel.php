@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             echo 'Test';
-        })->everyMinute();
+        })->everyMinute()->evenInMaintenanceMode();
 
         $schedule->command(SendNewsletterCommand::class)
             ->onOneServer()
