@@ -13,7 +13,9 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'user_rating' => $this->averageRating(User::class)
+            'user_rating' => $this->averageRating(User::class),
+            'image' => $this->image_url,
+            'created_by' => $this->createdBy->name,
         ];
     }
 }
