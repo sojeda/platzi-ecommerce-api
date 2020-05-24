@@ -40,7 +40,7 @@ class RatingTest extends TestCase
         $user->rate($product, 5);
         $user2->rate($product, 10);
 
-        $this->assertEquals(7.5, $product->averageUserRating());
+        $this->assertEquals(7.5, $product->averageRating(User::class));
     }
 
     public function test_rating_model()
