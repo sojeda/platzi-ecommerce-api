@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Product;
@@ -19,7 +21,7 @@ class ProductController extends Controller
         return new ProductCollection(Product::all());
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         return Product::create($request->all());
     }
@@ -29,7 +31,7 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
 
