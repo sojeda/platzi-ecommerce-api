@@ -16,8 +16,8 @@ trait CanBeRate
             ->wherePivot('rateable_type', $this->getMorphClass());
     }
 
-    public function averageUserRating(): float
+    public function averageRating(string $model = null): float
     {
-        return $this->qualifiers(User::class)->avg('score') ?: 0.0;
+        return $this->qualifiers($model)->avg('score') ?: 0.0;
     }
 }
