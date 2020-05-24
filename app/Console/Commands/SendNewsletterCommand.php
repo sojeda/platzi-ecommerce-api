@@ -23,15 +23,18 @@ class SendNewsletterCommand extends Command
         }
 
         $builder->whereNotNull('email_verified_at');
+        $count = $builder->count();
 
-        if ($count = $builder->count()) {
+        if ($count) {
             $this->info("Se enviaran {$count} correos");
 
             if ($this->confirm('¿Estas de acuerdo?')) {
+                $this->output->progressStart($count);
                 $builder->each(function (User $user) {
                     $user->notify(new NewsletterNotification());
+                    $this->output->progressAdvance();
                 });
-
+                $this->output->progressFinish();
                 $this->info('Correos enviados');
                 return;
             }
