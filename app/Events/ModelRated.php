@@ -11,14 +11,29 @@ class ModelRated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private Model $model;
+    private Model $qualifier;
     private Model $rateable;
     private float $score;
 
     public function __construct(Model $qualifier, Model $rateable, float $score)
     {
-        $this->model = $qualifier;
+        $this->qualifier = $qualifier;
         $this->rateable = $rateable;
         $this->score = $score;
+    }
+
+    public function getQualifier(): Model
+    {
+        return $this->qualifier;
+    }
+
+    public function getRateable(): Model
+    {
+        return $this->rateable;
+    }
+
+    public function getScore(): float
+    {
+        return $this->score;
     }
 }
