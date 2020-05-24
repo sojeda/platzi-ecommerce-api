@@ -60,6 +60,25 @@ class CategoryControllerTest extends TestCase
         $response->assertHeader('content-type', 'application/json');
     }
 
+    public function test_unique_name_create_category()
+    {
+        Sanctum::actingAs(
+            factory(User::class)->create(),
+            ['*']
+        );
+
+        $data = [
+            'name' => 'Hola',
+        ];
+
+        $this->postJson('/api/categories', $data);
+        $response = $this->postJson('/api/categories', $data);
+
+        $response->assertJsonValidationErrors([
+            'name'
+        ]);
+    }
+
     public function test_show_category()
     {
         /** @var Category $category */
