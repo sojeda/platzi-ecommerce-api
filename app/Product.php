@@ -13,6 +13,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function ratings()
     {
         return $this->belongsToMany(User::class, 'ratings')
