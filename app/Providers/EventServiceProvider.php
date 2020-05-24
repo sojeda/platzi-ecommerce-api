@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \Illuminate\Auth\Events\Login::class => [
+            \App\Listeners\LastLogin::class,
+        ],
         ModelRated::class => [
             SendEmailModelRatedNotification::class
         ],
