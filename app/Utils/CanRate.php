@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use App\Events\ModelRated;
 use App\Events\ModelUnrated;
+use App\Exceptions\InvalidScore;
 use Illuminate\Database\Eloquent\Model;
 
 trait CanRate
@@ -40,7 +41,7 @@ trait CanRate
         $to = config('rating.to');
 
         if ($score < $from || $score > $to) {
-            // Exception
+            throw new InvalidScore("EL valor debe estar entre {$from} y {$to}");
         }
 
         $this->ratings($model)->attach($model->getKey(), [
