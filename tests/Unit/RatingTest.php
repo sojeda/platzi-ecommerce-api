@@ -44,10 +44,10 @@ class RatingTest extends TestCase
         $product = factory(Product::class)->create();
 
         $user->rate($product, 5);
-        $user2->rate($product, 10);
+        $user2->rate($product, 3);
         $user->rate($user, 5);
 
-        $this->assertEquals(7.5, $product->averageRating(User::class));
+        $this->assertEquals(4, $product->averageRating(User::class));
         $this->assertEquals(5, $user->averageRating(User::class));
     }
 
