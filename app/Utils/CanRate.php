@@ -36,6 +36,13 @@ trait CanRate
             return false;
         }
 
+        $from = config('rating.from');
+        $to = config('rating.to');
+
+        if ($score < $from || $score > $to) {
+            // Exception
+        }
+
         $this->ratings($model)->attach($model->getKey(), [
             'score' => $score,
             'comments' => $comments,
