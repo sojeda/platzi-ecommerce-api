@@ -16,6 +16,7 @@
         "laravel/framework": "^7.0",
         "laravel/horizon": "^4.3",
         "laravel/sanctum": "^2.3",
+        "laravel/telescope": "3.4.*",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "sentry/sentry-laravel": "1.7.1"
