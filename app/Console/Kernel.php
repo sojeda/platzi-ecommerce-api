@@ -45,6 +45,8 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->withoutOverlapping()
             ->daily();
+
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
