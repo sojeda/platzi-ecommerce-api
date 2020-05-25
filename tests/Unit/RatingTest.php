@@ -62,7 +62,7 @@ class RatingTest extends TestCase
         /** @var Product $product */
         $product = factory(Product::class)->create();
 
-        $user->rate($product, 5);
+        $user->rate($product, 5, 'Comentario');
         $user->rate($user2, 3);
 
         /** @var Rating $rating */
@@ -73,11 +73,13 @@ class RatingTest extends TestCase
         $this->assertInstanceOf(User::class, $rating->qualifier);
         $this->assertEquals($user->id, $rating->qualifier->id);
         $this->assertEquals($product->id, $rating->rateable->id);
+        $this->assertEquals('Comentario', $rating->comments);
 
         $this->assertInstanceOf(User::class, $rating2->rateable);
         $this->assertInstanceOf(User::class, $rating2->qualifier);
         $this->assertEquals($user->id, $rating2->qualifier->id);
         $this->assertEquals($user2->id, $rating2->rateable->id);
+        $this->assertNull($rating2->comments);
 
         Event::assertDispatchedTimes(ModelRated::class, 2);
     }

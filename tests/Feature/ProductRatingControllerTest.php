@@ -33,7 +33,8 @@ class ProductRatingControllerTest extends TestCase
         Sanctum::actingAs($this->normalUser);
 
         $response = $this->postJson("/api/products/{$this->product->getKey()}/rate", [
-            'score' => 5
+            'score' => 5,
+            'comments' => 'Comment'
         ]);
 
         $response->assertSuccessful();
@@ -41,7 +42,8 @@ class ProductRatingControllerTest extends TestCase
         $this->assertDatabaseHas('ratings', [
             'score' => 5,
             'rateable_id' => $this->product->getKey(),
-            'rateable_type' => Product::class
+            'rateable_type' => Product::class,
+            'comments' => 'Comment'
         ]);
     }
 

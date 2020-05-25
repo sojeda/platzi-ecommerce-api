@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRatingRequest;
 use App\Http\Resources\ProductResource;
-use App\Http\Resources\RatingResource;
 use App\Product;
 use App\User;
-use Gate;
 use Illuminate\Http\Request;
 
 class ProductRatingController extends Controller
 {
-    public function rate(Product $product, Request $request)
+    public function rate(Product $product, ProductRatingRequest $request)
     {
-        $this->validate($request, [
-            'score' => 'required'
-        ]);
-
         /** @var User $user */
         $user = $request->user();
-        $user->rate($product, $request->get('score'));
+        $user->rate($product, $request->get('score'), $request->get('comments'));
 
         return new ProductResource($product);
     }

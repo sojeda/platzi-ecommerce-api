@@ -30,7 +30,7 @@ trait CanRate
         return $morphToMany;
     }
 
-    public function rate(Model $model, float $score): bool
+    public function rate(Model $model, float $score, string $comments = null): bool
     {
         if ($this->hasRated($model)) {
             return false;
@@ -38,6 +38,7 @@ trait CanRate
 
         $this->ratings($model)->attach($model->getKey(), [
             'score' => $score,
+            'comments' => $comments,
             'rateable_type' => get_class($model)
         ]);
 
