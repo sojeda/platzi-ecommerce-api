@@ -31,3 +31,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('products/{product}/unrate', [ProductRatingController::class, 'unrate']);
 });
 
+Route::get('exception', function () {
+    throw new Exception('Soy una excepcion');
+});
