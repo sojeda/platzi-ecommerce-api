@@ -46,5 +46,13 @@ class ProductRatingController extends Controller
         Gate::authorize('admin');
 
         logger()->info('Metodo Index');
+
+        $builder = Rating::query();
+
+        if ($request->has('notApproved')) {
+            $builder->whereNull('approved_at');
+        }
+
+        return RatingResource::collection($builder->paginate(10));
     }
 }
