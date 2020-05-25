@@ -30,6 +30,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('products/{product}/unrate', [ProductRatingController::class, 'unrate']);
 
+    Route::get('rating', [ProductRatingController::class, 'index']);
+
     Route::post('rating/{rating}/approve', [\App\Http\Controllers\ProductRatingController::class, 'approve']);
 });
 

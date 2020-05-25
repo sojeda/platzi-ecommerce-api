@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRatingRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\RatingResource;
 use App\Product;
 use App\Rating;
 use App\User;
@@ -38,5 +39,12 @@ class ProductRatingController extends Controller
         $rating->save();
 
         return response()->json();
+    }
+
+    public function index(Request $request)
+    {
+        Gate::authorize('admin');
+
+        logger()->info('Metodo Index');
     }
 }
