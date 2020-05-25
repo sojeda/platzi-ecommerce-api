@@ -91,4 +91,17 @@ class ProductRatingControllerTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function test_invalid_rate_product()
+    {
+        Sanctum::actingAs($this->normalUser);
+
+        $response = $this->postJson("/api/products/{$this->product->getKey()}/rate", [
+            'score' => 10
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'error' => "EL valor debe estar entre 1 y 5"
+        ]);
+    }
 }

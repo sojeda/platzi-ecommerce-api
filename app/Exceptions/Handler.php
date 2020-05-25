@@ -61,7 +61,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof InvalidScore) {
             return response()->json([
                 'error' => $exception->getMessage()
-            ]);
+            ], 422);
         }
 
         return parent::render($request, $exception);
