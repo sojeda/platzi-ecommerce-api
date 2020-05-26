@@ -17,17 +17,4 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
-    public function ratings()
-    {
-        return $this->belongsToMany(User::class, 'ratings')
-            ->using(Rating::class)
-            ->as('users')
-            ->withTimestamps();
-    }
-
-    public function averageRating(): float
-    {
-        return $this->ratings()->avg('score') ?: 0.0;
-    }
 }
