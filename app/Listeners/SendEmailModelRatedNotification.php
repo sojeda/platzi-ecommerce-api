@@ -2,21 +2,22 @@
 
 namespace App\Listeners;
 
-use App\Events\ModelUnrated;
-use App\Notifications\ModelUnratedNotification;
+use App\Events\ModelRated;
+use App\Notifications\ModelRatedNotification;
 use App\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendEmailModelUnratedNotificacion implements ShouldQueue
+class SendEmailModelRatedNotification implements ShouldQueue
 {
-    public function handle(ModelUnrated $event)
+    public function handle(ModelRated $event)
     {
         $rateable = $event->getRateable();
 
         if ($rateable instanceof Product) {
-            $notification = new ModelUnratedNotification(
+            $notification = new ModelRatedNotification(
                 $event->getQualifier()->name,
-                $rateable->name
+                $rateable->name,
+                $event->getScore()
             );
             $rateable->createdBy->notify($notification);
         }
