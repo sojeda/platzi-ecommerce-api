@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\Events\ModelRated;
-use App\Events\ModelUnrated;
 use App\Product;
-use App\Rating;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Laraveles\Rating\Events\ModelRated;
+use Laraveles\Rating\Events\ModelUnrated;
+use Laraveles\Rating\Models\Rating;
 use Tests\TestCase;
 
 class RatingTest extends TestCase

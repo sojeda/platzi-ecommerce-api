@@ -2,16 +2,17 @@
 
 namespace App;
 
-use App\Utils\CanBeRate;
-use App\Utils\CanRate;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laraveles\Rating\Contracts\Rating as RatingAlias;
+use Laraveles\Rating\Traits\CanBeRated;
+use Laraveles\Rating\Traits\CanRate;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, RatingAlias
 {
-    use Notifiable, HasApiTokens, CanRate, CanBeRate;
+    use Notifiable, HasApiTokens, CanRate, CanBeRated;
 
     /**
      * The attributes that are mass assignable.
@@ -39,4 +40,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function name(): string
+    {
+        // TODO: Implement name() method.
+    }
 }

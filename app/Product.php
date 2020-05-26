@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Events\ProductCreating;
-use App\Utils\CanBeRate;
 use Illuminate\Database\Eloquent\Model;
+use Laraveles\Rating\Contracts\Rateable;
+use Laraveles\Rating\Traits\CanBeRated;
 
-class Product extends Model
+class Product extends Model implements Rateable
 {
-    use CanBeRate;
+    use CanBeRated;
 
     protected $dispatchesEvents = [
         'creating' => ProductCreating::class,
@@ -31,5 +32,10 @@ class Product extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function name(): string
+    {
+        return $this->name;
     }
 }

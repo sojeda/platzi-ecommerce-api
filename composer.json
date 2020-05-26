@@ -19,7 +19,8 @@
         "laravel/telescope": "3.4.*",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "sentry/sentry-laravel": "1.7.1"
+        "sentry/sentry-laravel": "1.7.1",
+        "sojeda/rating": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -65,5 +66,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sojeda/rating"
+        }
+    ]
 }

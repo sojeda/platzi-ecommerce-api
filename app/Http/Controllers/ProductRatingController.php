@@ -6,10 +6,10 @@ use App\Http\Requests\ProductRatingRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\RatingResource;
 use App\Product;
-use App\Rating;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Laraveles\Rating\Models\Rating;
 
 class ProductRatingController extends Controller
 {

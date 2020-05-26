@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use App\Product;
-use App\Rating;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Laravel\Sanctum\Sanctum;
+use Laraveles\Rating\Models\Rating;
 use Tests\TestCase;
 
 class ProductRatingControllerTest extends TestCase
@@ -102,7 +102,7 @@ class ProductRatingControllerTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'error' => "EL valor debe estar entre 1 y 5"
+            'error' => "El valor debe estar entre 1 y 5"
         ]);
     }
 

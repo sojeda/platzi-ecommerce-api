@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "509092bc525c241b733826be070abd2a",
+    "content-hash": "d126a24f9996986dd4dbfdffbbbb7a66",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3755,6 +3755,97 @@
                 }
             ],
             "time": "2020-04-01T10:30:44+00:00"
+        },
+        {
+            "name": "sojeda/rating",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sojeda/rating.git",
+                "reference": "7a0bba715e070a989f83fb291ea25e3c8ec4fc89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sojeda/rating/zipball/7a0bba715e070a989f83fb291ea25e3c8ec4fc89",
+                "reference": "7a0bba715e070a989f83fb291ea25e3c8ec4fc89",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^5.8|^6.0|^7.0",
+                "illuminate/container": "^5.8|^6.0|^7.0",
+                "illuminate/contracts": "^5.8|^6.0|^7.0",
+                "illuminate/database": "^5.8|^6.0|^7.0",
+                "illuminate/support": "^5.8|^6.0|^7.0",
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^5.0",
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laraveles\\Rating\\RatingServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laraveles\\Rating\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Laraveles\\Rating\\Test\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "test-coverage": [
+                    "vendor/bin/phpunit --coverage-clover=coverage.xml"
+                ],
+                "format": [
+                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Renoki",
+                    "email": "rennokki@gmail.com",
+                    "homepage": "https://twitter.com/rennokki",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sergio Ojeda",
+                    "email": "soj3da@gmail.com",
+                    "homepage": "https://twitter.com/soj3da",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Eloquent Rating allows you to assign ratings to any model.",
+            "homepage": "https://github.com/sojeda/rating",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "model",
+                "rate",
+                "rating",
+                "star",
+                "stars",
+                "system"
+            ],
+            "support": {
+                "source": "https://github.com/sojeda/rating/tree/v2.2.1"
+            },
+            "time": "2020-05-26T23:28:08+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

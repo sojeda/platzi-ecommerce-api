@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Rating;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Laraveles\Rating\Models\Rating;
 
 class RatingResource extends JsonResource
 {
