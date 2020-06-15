@@ -2,6 +2,27 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 4 - Reto
+
+1. Modificar los Test y usar el Facade de Sanctum para autenticar un usuario 
+```php
+use App\User;
+use Laravel\Sanctum\Sanctum;
+
+Sanctum::actingAs(
+    factory(User::class)->create()
+);
+``` 
+2. Usar Trait en el Modelo Usuario para generar tokens ``use HasApiTokens``
+3. Crear Endpoint para devolver Token ``php artisan make:controller UserTokenController``
+4. Crear Test ``php artisan make:test UserTokenControllerTest``
+5. Crear la ruta ``Route::post('/sanctum/token', 'UserTokenController');``
+6. Correr los Test y verificar que todo siga funcionando.
+
+*Extra*:
+El middleware ``auth:sanctum`` se colocaron en cada Controller para que los métodos index y show no lo tengan. Ver *ProductController* y *CategoryController*.
+
+
 ## Clase 4
 
 1. Instalar paquete Laravel UI ``composer require laravel/ui``
