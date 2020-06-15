@@ -2,6 +2,26 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 5
+
+1. Crear un nuevo recurso con ``php artisan make:resource ProductResource`` y el método toArray definir lo que queremos devolver al usuario.
+2. Modificar controlador de Productos, y donde se devuelva el modelo sustituir por ``return new ProductResource($product);``
+
+Si necesitamos trabajar con más de un Modelo tenemos las Colecciones. No es necesario crear una colección por cada Recursos que declaremos, puesto que los mismos, contienen un método llamado collection. Pero como estamos practicando, si necesitas personalizar la meta data dentro de una coleccion puedes crear una con el comando:
+
+1. ``php artisan make:resource ProductCollection``
+2. Si queremos indicar que use un recurso colocamos ``public $collects = ProductResource::class;``
+3. Completar método *toArray*
+4. Si necesitas paginación las collections ya vienen con todo preparado, en la consulta del modelo y cambiamos el método all por *paginate* ``new ProductCollection(Product::paginate(5));``
+
+Separando responsabilidades:
+
+1. Crear FormRequest ``php artisan make:request StoreProductRequest`` y  ``php artisan make:request UpdateProductRequest``
+2. En cada uno de los request podemos incorporar las reglas de validación en el método rules, y el acceso al mismo en el método authorize.
+3. Ejecutar los Test. Acá agregamos un nuevo test llamado *test_validation_new_product* para comprobar las reglas de validación, se puede jugar con esto y hacer distintas pruebas para verificación.
+
+*Reto de la Clase*: Hacer lo mismo con Categorías, y agregar una regla de validación para que el nombre sea único.
+
 ## Clase 4 - Reto
 
 1. Modificar los Test y usar el Facade de Sanctum para autenticar un usuario 
@@ -63,23 +83,23 @@ Cambiar el motor de Base de Datos.
 
 ## Clase 2 - Reto
 
-1. Crear CategoryControllerTest y crear cada caso de uso para la API de Categorias. ```php artisan make:test CategoryControllerTest```
-2. Crea mi modelo Categoria con artisan e indicar las flags necesarios para que ademas cree la migracion, factory, seeder y controllador de API con ```php artisan make:model Category --api --all```
-3. Editar migracion para crear la tabla.
-4. Crear las rutas y apuntarlas a cada metodo de mi API. Se puede usar  ```Route::apiResource('categories', 'CategoryController');```
-5. Programar la logica de negocio dentro de CategoryController
+1. Crear CategoryControllerTest y crear cada caso de uso para la API de Categorías. ```php migración make:test CategoryControllerTest```
+2. Crea mi modelo Categoría con artisan e indicar las flags necesarios para que además cree la migracion, factory, seeder y controllador de API con ```php artisan make:model Category --api --all```
+3. Editar migración para crear la tabla.
+4. Crear las rutas y apuntarlas a cada método de mi API. Se puede usar  ```Route::apiResource('categories', 'CategoryController');```
+5. Programar la lógica de negocio dentro de CategoryController
 6. Ir Testeando cada método con CategoryControllerTest ``vendor/bin/phpunit --filter=CategoryControllerTest``
 
 ## Clase 2 
 
 1. Crear ProductControllerTest y crear cada caso de uso para nuestra API de Productos. ```php artisan make:test ProductControllerTest```
-2. Crea mi modelo Producto con artisan e indicar las flags necesarios para que ademas cree la migracion, factory, seeder y controllador de API con ```php artisan make:model Produdct --api --all```
-3. Editar migracion de productos para crear la tabla.
-4. Crear las rutas y apuntarlas a cada metodo de mi API. Se puede usar  ```Route::apiResource('products', 'ProductController');```
-5. Programar la logica de negocio dentro de ProductController
+2. Crea mi modelo Producto con artisan e indicar las flags necesarios para que además cree la migración, factory, seeder y controllador de API con ```php artisan make:model Produdct --api --all```
+3. Editar migración de productos para crear la tabla.
+4. Crear las rutas y apuntarlas a cada método de mi API. Se puede usar  ```Route::apiResource('products', 'ProductController');```
+5. Programar la lógica de negocio dentro de ProductController
 6. Ir Testeando cada método con ProductControllerTest ``vendor/bin/phpunit --filter=ProductControllerTest``
 
-*Reto de la Clase*: Crear Endpoint para Categorias. 
+*Reto de la Clase*: Crear Endpoint para Categorías. 
 
 ## Clase 1
 
