@@ -2,6 +2,14 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 5 Reto
+
+1. Crear un nuevo recurso con ``php artisan make:resource CategoryResource`` y el método toArray definir lo que queremos devolver al usuario.
+2. Modificar controlador de Categorías, y donde se devuelva el modelo sustituir por ``return new CategoryResource($category);``
+3. Donde tengamos colecciones usar el método collection para no crear un nuevo archivo ``CategoryResource::collection(Category::paginate(5))``
+4. Crear FormRequest ``php artisan make:request StoreCategoryRequest`` y  ``php artisan make:request UpdateCategoryRequest`` y agregar la regla de validación para que el nombre sea único ``Rule::unique('categories')``, como en la edición tenemos que validar todos los registros menos el que se esta actualizando colocamos ``Rule::unique('categories')->ignore($this->category)``
+5. Ejecutar los Test.
+
 ## Clase 5
 
 1. Crear un nuevo recurso con ``php artisan make:resource ProductResource`` y el método toArray definir lo que queremos devolver al usuario.
