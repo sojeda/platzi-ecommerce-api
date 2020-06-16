@@ -2,6 +2,44 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 6
+
+1. Crear migración ``php artisan make:migration add_category_id_to_products_table``
+2. Editar migración para agregar la columna a la tabla Productos y ademas colocarle una categoría por defecto llamada "Otras" que creamos en la migración.
+3. Ejecutar migración ``php artisan migrate``
+4. Agregar relación en el Modelo Product:
+```php
+use App\Category;
+
+public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+```
+5. Agregar relación inversa en Category.
+```php
+use App\Product;
+
+public function products()
+{
+    return $this->hasMany(Product::class);
+}
+```
+6. Modificar el Factory de Productos, para cuando lo usemos se cree con una categoria al azar.
+```php
+'category_id' => function (array $post) {
+    return Category::inRandomOrder()->first()->id;
+},
+```
+7. Testear y verificar que este andando todo.
+
+###Extra: Crear Relación con un Modelo llamado Rating.
+
+1. Crear Modelo (Rating.php), migracion (2020_05_23_235914_create_ratings_table.php) y Test (RatingTest.php)
+2. Modificar la migración.
+3. Relacionar con Productos y Usuarios (ver los modelos).
+
+
 ## Clase 5 Reto
 
 1. Crear un nuevo recurso con ``php artisan make:resource CategoryResource`` y el método toArray definir lo que queremos devolver al usuario.
