@@ -1,6 +1,35 @@
-## Curso de Laravel Avanzado en Platzi
+# Curso de Laravel Avanzado en Platzi
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
+
+## Clase 6 Reto
+
+1. Crear migración ``php artisan make:model AddCreatedByToProductsTable``
+2. Agregar relación en Product.
+```php
+use App\User;
+
+public function createdBy()
+{
+    return $this->belongsTo(User::class, 'created_by');
+}
+```
+3. Editar el Factory
+```php
+$factory->define(Product::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'price' => $faker->numberBetween(10000, 60000),
+        'category_id' => function () {
+            return Category::inRandomOrder()->first()->id;
+        },
+        'created_by' => function () {
+            return User::inRandomOrder()->first()->id;
+        },
+    ];
+});
+```
+Nota: Para que funcione correctamente hay que asegurarnos que ejecutamos los Seeders en el Orden correcto. (Ver DatabaseSeeder.php)
 
 ## Clase 6
 
