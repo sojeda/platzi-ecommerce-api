@@ -2,6 +2,20 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 7
+
+1. ``php artisan make:migration UpdateRatingTable``
+2. Composicion de la tabla con rateable y qualifier
+3. ``php artisan make:model Rating``
+4. Definir mis relaciones *morphTo*
+5. Definir las relaciones en *User*.
+6. Hacer lo mismo en el modelo *Product*.
+7. Como queremos evitar duplicar código, y nuestras relaciones son abstractas, podemos llevarlas a un trait.
+8. Creo una carpeta llamada Traits y muevo el código a CanBeRated y CanRate respectivamente,
+9. Correr los Test
+
+La idea es que en nuestros trait no haya referencia alguna a ningún modelo, de tal manera que lo podamos reutilizar, así que pasemos por parámetro.
+
 ## Clase 6 Reto
 
 1. Crear migración ``php artisan make:model AddCreatedByToProductsTable``
