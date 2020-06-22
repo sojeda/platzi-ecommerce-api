@@ -2,6 +2,16 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 8
+
+1. ``php artisan make:command SendNewsletterCommand``
+2. Colocar una firma y descripción en el comando creado.
+3. Crear notificación ``php artisan make:notification NewsletterNotification``
+4. Habilitar verificación de correo implementando en el modelo ``User`` la interfaz ``MustVerifyEmail`` y modificando las rutas de Auth ``Auth::routes(['verify' => true]);``
+5. Configurar Servidor SMTP, tenemos el de Homestead o podemos usar Mailtrap.
+6. Crear la consulta dentro del Comando.
+7. Probar que lleguen los correos.
+
 ## Clase 7 Reto
 
 1. Utilizar el trait *CanBeRate* en Usuario.
