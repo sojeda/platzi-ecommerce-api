@@ -2,6 +2,49 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 9 Reto
+
+Preparar los endpoint correspondientes para que los usuarios puedan calificar productos a traves de la API.
+
+1. Crear Controlador con los métodos ``php artisan make:controller ProductRatingController``
+
+```php
+public function rate(Product $product, Request $request)
+{
+    $this->validate($request, [
+        'score' => 'required'
+    ]);
+
+    /** @var User $user */
+    $user = $request->user();
+    $user->rate($product, $request->get('score'));
+
+    return new ProductResource($product);
+}
+
+public function unrate(Product $product, Request $request)
+{
+    /** @var User $user */
+    $user = $request->user();
+    $user->unrate($product);
+
+    return new ProductResource($product);
+}
+```
+
+2. Crear las rutas y colocarla en el grupo de rutas.
+```php
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('newsletter', [\App\Http\Controllers\NewsletterController::class, 'send'])->name('send.newsletter');
+
+    Route::post('products/{product}/rate', [ProductRatingController::class, 'rate']);
+
+    Route::post('products/{product}/unrate', [ProductRatingController::class, 'unrate']);
+});
+```
+
+3. Testear *ProductRatingControllerTest*
+
 ## Clase 9 
 
 1. Crear Controller para Newsletter ``php artisan make:controller NewsletterController``
