@@ -2,6 +2,32 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 9 
+
+1. Crear Controller para Newsletter ``php artisan make:controller NewsletterController``
+2. Crear método ``send``.
+3. Crear Ruta ``Route::post('newsletter', [\App\Http\Controllers\NewsletterController::class, 'send'])->name('send.newsletter');``
+4. Complementar método para que envie los correos usando el comando:
+```php
+Artisan::call(SendEmailVerificationReminderCommand::class);
+
+return response()->json();
+```
+5. Testear endpoint.
+
+## Clase 8 Extra
+
+1. Agregar Barra de Progreso
+
+```php
+$this->output->progressStart($count);
+$builder->each(function (User $user) {
+    $user->notify(new NewsletterNotification());
+    $this->output->progressAdvance();
+});
+$this->output->progressFinish();
+```
+
 ## Clase 8 Reto
 
 Envía un correo electronico a los usuarios que no han verificado su cuenta después de haberse registrado hace una semana
