@@ -2,6 +2,23 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 10 Reto
+
+Modificar el comando de Newsletter para que dentro del correo se envien los 6 productos con mejor calificacion.
+
+1. Usar relación HasMany dentro del trait CanBeRate
+2. Hacer la consulta de Productos dentro de SendNewsletterCommand
+```php
+$productQuery = Product::query();
+
+$productQuery->withCount(['qualifications as average_rating' => function ($query) {
+    $query->select(DB::raw('coalesce(avg(score),0)'));
+}])->orderByDesc('average_rating');
+
+$products = $productQuery->take(6)->get();
+```
+3. Modificar NewsletterNotification para recibir los productos e incorporarlos al correo.
+
 ## Clase 10
 
 Si queremos ejecutar las tareas programadas en nuestro Homestead, abrimos el archivo Homestead.yaml y en la configuración  del sitio colocamos:
