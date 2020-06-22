@@ -2,6 +2,26 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 10
+
+Si queremos ejecutar las tareas programadas en nuestro Homestead, abrimos el archivo Homestead.yaml y en la configuración  del sitio colocamos:
+
+```yaml
+sites:
+    - map: platzi-api.test
+      to: /home/vagrant/code/platzi-ecommerce-api/public
+      schedule: true
+```
+
+1. Editar el archivo App/Console/Kernel.php
+
+- onOneServer: por si nuestra aplicación se ejecuta en varios servidores, poder limitar la tarea para que solo se ejecute en un único servidor.
+- evenInMaintenanceMode: que nos sirve para ejecutar la tarea asi tengamos activo el modo mantenimiento.
+- withoutOverlapping: Para evitar la superposición de las tareas, de tal manera que no se ejecute un comando si hay una instancia corriendo del mismo.
+- sendOutputTo: nos sirve para trabajar con la salida de cada comando, lo que hice fue que cada vez que se ejecute, me escriba un archivo llamado inspire.log
+
+2. Agregar log al .gitignore
+
 ## Clase 9 Reto
 
 Preparar los endpoint correspondientes para que los usuarios puedan calificar productos a traves de la API.
