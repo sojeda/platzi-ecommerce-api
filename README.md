@@ -2,6 +2,14 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 8 Reto
+
+Envía un correo electronico a los usuarios que no han verificado su cuenta después de haberse registrado hace una semana
+
+1. ``php artisan make:command SendEmailVerificationReminderCommand`` 
+2. Armar query con Eloquent
+3. Enviar correos y probar
+
 ## Clase 8
 
 1. ``php artisan make:command SendNewsletterCommand``
