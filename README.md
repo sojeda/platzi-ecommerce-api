@@ -2,6 +2,59 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 11
+
+1. Crear evento con ``php artisan make:event ModelRated``
+2. Agregar los parametros requeridos al Evento
+```php
+public function getQualifier(): Model
+{
+    return $this->qualifier;
+}
+
+public function getRateable(): Model
+{
+    return $this->rateable;
+}
+
+public function getScore(): float
+{
+    return $this->score;
+}
+```
+3.  Disparar evento en el trait CanRate
+```php
+event(new ModelRated($this, $model, $score));
+```
+4. Crear Listener con ``php artisan make:listener SendEmailModelRatedNotification``
+5. Editar el listener para enviar una notificación si el modelo es un Producto.
+```php
+public function handle(ModelRated $event)
+{
+    $rateable = $event->getRateable();
+
+    if ($rateable instanceof Product) {
+        $notification = new ModelRatedNotification(
+            $event->getQualifier()->name,
+            $rateable->name,
+            $event->getScore()
+        );
+        $rateable->createdBy->notify($notification);
+    }
+}
+```
+6. Crear la notificación ``php artisan make:notification ModelRatedNotification``
+7. Editar la notificación para que envie un correo con el nombre del producto y la puntuación. (ver ModelRatedNotification.php)
+8. Agregar el evento y el listener al EventServiceProvider
+```php
+ModelRated::class => [
+    SendEmailModelRatedNotificacion::class
+],
+```
+9. Testear.
+
+Se puede ver el Test en RatingTest.php
+
 ## Clase 10 Reto
 
 Modificar el comando de Newsletter para que dentro del correo se envien los 6 productos con mejor calificacion.

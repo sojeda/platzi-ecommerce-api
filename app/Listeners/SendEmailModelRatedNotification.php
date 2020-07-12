@@ -6,7 +6,7 @@ use App\Events\ModelRated;
 use App\Notifications\ModelRatedNotification;
 use App\Product;
 
-class SendEmailModelRatedNotificacion
+class SendEmailModelRatedNotification
 {
     public function handle(ModelRated $event)
     {
