@@ -2,6 +2,51 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 12
+
+Los modelos de Eloquent ejecutan varios eventos, permitiendo que captures los distintos puntos en el ciclo de vida. 
+
+1. Agregar migración ``php artisan make:migration AddImageToProductsTable``
+2. Agregar evento en Booted (closure)
+```php
+protected static function booted()
+{
+    static::creating(function (Product $product) {
+        $faker = \Faker\Factory::create();
+        $product->image_url = $faker->imageUrl();
+        $product->createdBy()->associate(auth()->user());
+    });
+}
+```
+3. Modificar ProductResource para devolver la imagen.
+4. Probar que cada vez que creamos un nuevo producto, se le coloque una url al azar de una imagen.
+5. Ahora vamos a migrar el closure a un evento, creamos el evento con ``php artisan make:event ProductCreating``
+6. Editamos el evento para que reciba el producto.
+7. Para empezar, definamos la propiedad $dispatchesEvents en el modelo para que Eloquent que mapee varios puntos del ciclo de vida de modelo de nuestras propias clases de evento.
+```php
+protected $dispatchesEvents = [
+    'creating' => ProductCreating::class,
+];
+```
+8. Testear que el evento se dispare.
+9. En este caso en lugar de usar un listener usaremos Observers para colocar la lógica de negocio, para aprender que existen distintas maneras, lo creamos con ``php artisan make:observer ProductObserver``
+10. Migramos la lógica de negocio al Observer creado.
+```php
+public function creating(Product $product)
+{
+  $faker = \Faker\Factory::create();
+  $product->image_url = $faker->imageUrl();
+
+  if (!$product->createdBy()->exists()) {
+      $product->createdBy()->associate(auth()->user());
+  }
+}
+```
+11. Registramos el Observer en AppServiceProvider 
+```php
+Product::observe(ProductObserver::class);
+```
+
 ## Clase 11 - Reto
 
 1. Crear evento con ``php artisan make:event ModelUnrated``
