@@ -2,6 +2,62 @@
 
 Creación de un sistema que permitirá a tus usuarios puntuar compras y a otros usuarios desde 1 a 5 estrellas, implementando: Model Factory y seeders para generar datos; relaciones polimórficas entre tus clases; eventos que se dispararán ante las acciones de tus usuarios, service providers y service containers para aspectos como autenticación; y todo esto podrás publicarlo dentro de Packagist para ser reutilizado en múltiples proyectos.
 
+## Clase 11 - Reto
+
+1. Crear evento con ``php artisan make:event ModelUnrated``
+2. Agregar los parámetros requeridos al Evento
+```php
+private Model $qualifier;
+private Model $rateable;
+
+public function __construct(Model $qualifier, Model $rateable)
+{
+    $this->qualifier = $qualifier;
+    $this->rateable = $rateable;
+}
+
+public function getQualifier(): Model
+{
+    return $this->qualifier;
+}
+
+public function getRateable(): Model
+{
+    return $this->rateable;
+}
+```
+3.  Disparar evento en el trait CanRate
+```php
+event(new ModelUnrated($this, $model));
+```
+4. Crear Listener con ``php artisan make:listener SendEmailModelUnratedNotification``
+5. Editar el listener para enviar una notificación si el modelo es un Producto.
+```php
+public function handle(ModelUnrated $event)
+    {
+        $rateable = $event->getRateable();
+
+        if ($rateable instanceof Product) {
+            $notification = new ModelUnratedNotification(
+                $event->getQualifier()->name,
+                $rateable->name
+            );
+            $rateable->createdBy->notify($notification);
+        }
+    }
+```
+6. Crear la notificación ``php artisan make:notification ModelUnratedNotification``
+7. Editar la notificación. (ver ModelUnratedNotification.php)
+8. Agregar el evento y el listener al EventServiceProvider
+```php
+ModelUnrated::class => [
+    SendEmailModelUnratedNotificacion::class,
+],
+```
+9. Testear.
+
+Se puede ver el Test en RatingTest.php ``Event::assertDispatchedTimes(ModelUnrated::class);``
+
 ## Clase 11
 
 1. Crear evento con ``php artisan make:event ModelRated``

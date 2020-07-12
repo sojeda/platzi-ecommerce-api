@@ -6,7 +6,7 @@ use App\Events\ModelUnrated;
 use App\Notifications\ModelUnratedNotification;
 use App\Product;
 
-class SendEmailModelUnratedNotificacion
+class SendEmailModelUnratedNotification
 {
     public function handle(ModelUnrated $event)
     {
